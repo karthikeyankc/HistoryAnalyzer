@@ -10,15 +10,13 @@ def parse(url):
 		domain = sublevel_split[0].replace("www.", "")
 		return domain
 	except IndexError:
-		print "Add an url in this format - https://example.org/"
+		print "URL format error!"
 
 #path to user's history database
 data_path = os.path.expanduser('~')+"\AppData\Local\Google\Chrome\User Data\Default"
 files = os.listdir(data_path)
 
 history_db = os.path.join(data_path, 'history')
-print history_db
-
 
 #querying the db
 c = sqlite3.connect(history_db)
