@@ -1,6 +1,5 @@
 import os
 import sqlite3
-import datetime
 import operator
 
 def parse(url):
