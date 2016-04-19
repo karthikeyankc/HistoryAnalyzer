@@ -1,6 +1,8 @@
 import os
 import sqlite3
 import operator
+from collections import OrderedDict
+import matplotlib.pyplot as plt
 
 def parse(url):
 	try:
@@ -35,8 +37,14 @@ for url, count in results:
 		sites_count[url] = 1
 
 #sorting the dict by values
-sites_count_sorted = sorted(sites_count.items(), key=operator.itemgetter(1), reverse=True)
+sites_count_sorted = OrderedDict(sorted(sites_count.items(), key=operator.itemgetter(1), reverse=True))
 
 #results
-for site, count in sites_count_sorted:
-	print site, count 
+for site, count in sites_count_sorted.items():
+	print site, count
+
+#plotted results
+plt.bar(range(len(sites_count_sorted)), sites_count_sorted.values(), align='edge')
+plt.xticks(rotation=45)
+plt.xticks(range(len(sites_count_sorted)), sites_count_sorted.keys())
+plt.show()
