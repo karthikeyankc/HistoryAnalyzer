@@ -17,10 +17,10 @@ def analyze(results):
 
 	prompt = raw_input("[.] Type <c> to print or <p> to plot\n[>] ")
 
-	if prompt == "c":
+	if prompt.lower() == "c":
 		for site, count in sites_count_sorted.items():
 			print site, count
-	elif prompt == "p":
+	elif prompt.lower() == "p":
 		plt.bar(range(len(results)), results.values(), align='edge')
 		plt.xticks(rotation=45)
 		plt.xticks(range(len(results)), results.keys())
