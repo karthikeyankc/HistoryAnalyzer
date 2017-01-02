@@ -27,7 +27,7 @@ def analyze(results):
 		plt.show()
 	else:
 		print "[.] Uh?"
-		quit()
+		analyze (sites_count_sorted)
 
 #path to user's history database (Chrome)
 data_path = os.path.expanduser('~')+"\AppData\Local\Google\Chrome\User Data\Default"
@@ -35,15 +35,22 @@ files = os.listdir(data_path)
 
 history_db = os.path.join(data_path, 'history')
 
-#querying the db
+#connection
 c = sqlite3.connect(history_db)
 cursor = c.cursor()
+
+#list all tables
+#list_tables = "SELECT name FROM sqlite_master WHERE type='table';"
+#cursor.execute(list_tables)
+#print cursor.fetchall()
+
+#url and visit counts
 select_statement = "SELECT urls.url, urls.visit_count FROM urls, visits WHERE urls.id = visits.url;"
 cursor.execute(select_statement)
 
 results = cursor.fetchall() #tuple
 
-sites_count = {} #dict makes iterations easier :D
+sites_count = {} #to iterate easier
 
 for url, count in results:
 	url = parse(url)
