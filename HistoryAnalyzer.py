@@ -11,7 +11,7 @@ def parse(url):
 		domain = sublevel_split[0].replace("www.", "")
 		return domain
 	except IndexError:
-		print "URL format error!"
+		print "URL format error! url = {}".format(url)
 
 def analyze(results):
 
@@ -45,8 +45,12 @@ cursor = c.cursor()
 #print cursor.fetchall()
 
 #url and visit counts
-select_statement = "SELECT urls.url, urls.visit_count FROM urls, visits WHERE urls.id = visits.url;"
-cursor.execute(select_statement)
+try:
+	select_statement = "SELECT urls.url, urls.visit_count FROM urls, visits WHERE urls.id = visits.url;"
+	cursor.execute(select_statement)
+except sqlite3.OperationalError:
+	print "[!] The database is locked! Please exit Chrome and run the script again."
+	quit()
 
 results = cursor.fetchall() #tuple
 
