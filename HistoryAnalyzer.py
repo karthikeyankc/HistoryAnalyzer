@@ -3,6 +3,7 @@ import sqlite3
 import operator
 from collections import OrderedDict
 import matplotlib.pyplot as plt
+import shutil
 
 def parse(url):
 	try:
@@ -33,7 +34,14 @@ def analyze(results):
 data_path = os.path.expanduser('~')+"\AppData\Local\Google\Chrome\User Data\Default"
 files = os.listdir(data_path)
 
-history_db = os.path.join(data_path, 'history')
+# path to user's temp files
+temp_path = os.path.expanduser('~')+"\AppData\Local\Temp"
+
+# create a copy of history database in temp
+shutil.copyfile(os.path.join(data_path, 'History'),os.path.join(temp_path,'History.db'))
+
+# connect to the copy of history database
+history_db = os.path.join(temp_path,'History.db')
 
 #connection
 c = sqlite3.connect(history_db)
